@@ -9,9 +9,18 @@ const envFile = `.env.${environment}`;
 dotenv.config({ path: envFile });
 
 const app = express();
+
+//cors protection
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 app.use(
     cors({
-        origin: process.env.JOBONIC_PUBLIC_URL,
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
         methods: ["GET", "POST"],
     })
 );
@@ -101,6 +110,7 @@ const aiModel = process.env.AI_MODEL;
 
 // Host
     const PORT = process.env.PORT || 4000;
-    server.listen(PORT, () => {
+    const hostUrl = process.env.hostUrl || 4000;
+    server.listen(PORT, hostUrl, () => {
         console.log(`AI Server is running on port ${PORT}`);
     });
