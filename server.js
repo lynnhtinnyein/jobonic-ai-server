@@ -110,7 +110,7 @@ const aiModel = process.env.AI_MODEL;
 
 // Host
     const PORT = process.env.PORT || 4000;
-    const hostUrl = process.env.hostUrl || 4000;
+    const hostUrl = process.env.HOST_URL || 4000;
     server.listen(PORT, hostUrl, () => {
         console.log(`AI Server is running on port ${PORT}`);
     });
