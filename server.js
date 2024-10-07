@@ -56,10 +56,7 @@ const aiModel = process.env.AI_MODEL;
                 }
             });
 
-            responseText = responseText.trim();
-            const result = findArrayInSentence(responseText);
-            return result;
-
+            return responseText.trim();
         } catch (error) {
             console.error('Failed to handle response:', error);
             return '';
@@ -82,8 +79,10 @@ const aiModel = process.env.AI_MODEL;
                 steam: false
             });
 
-            const result = handleOllamaResponse(res.data);
-            return result;
+            const ollamaResponseText = handleOllamaResponse(res.data);
+            const keywords = findArrayInSentence(ollamaResponseText);
+            const uniqueKeywords = [...new Set(keywords)];
+            return uniqueKeywords;
         } catch (error) {
             console.log('error', error)
         }
