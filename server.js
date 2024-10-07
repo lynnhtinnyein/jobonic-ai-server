@@ -89,6 +89,10 @@ const aiModel = process.env.AI_MODEL;
     }
 
 //routes
+    app.get("/", async (req, res) => {
+        res.status(200).json({ message: 'Jobonic AI Server is running' });
+    });
+
     app.post("/", async (req, res) => {
         const payload = req.body;
         const prompt = payload.prompt ?? '';
